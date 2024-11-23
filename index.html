@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212;
+            color: #fff;
+        }
+
+        header {
+            padding: 20px;
+            background: linear-gradient(45deg, #ff6f61, #f45d8d);
+            color: #fff;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        /* Carousel Section */
+        .carousel-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            margin: 20px 0;
+            padding: 10px 0;
+            scrollbar-width: none; /* Hide scrollbar in Firefox */
+        }
+
+        .carousel-container::-webkit-scrollbar {
+            display: none; /* Hide scrollbar in Chrome, Safari */
+        }
+
+        .exercise-card {
+            min-width: 200px;
+            margin: 0 10px;
+            border-radius: 10px;
+            background: #282828;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .exercise-card:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 111, 97, 0.5);
+        }
+
+        .exercise-card img {
+            width: 200px;
+            height: 150px; /* Set a fixed height */
+            object-fit: cover; /* Ensures the image is scaled and cropped to fit the dimensions */
+            border-radius: 10px 10px 0 0; /* Maintain rounded corners */
+        }
+
+        .exercise-card h3 {
+            margin: 10px 0;
+            font-size: 1.2rem;
+        }
+
+        /* Exercise Screen */
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        /* Video Section */
+        #video-container, #output-container {
+            margin: 20px auto;
+            position: relative;
+            width: 80%;
+            max-width: 640px;
+        }
+
+        canvas {
+            border-radius: 15px;
+            width: 100%;
+        }
+
+        video {
+            display: none;
+        }
+
+        /* Analytics Section */
+        .analytics-section {
+            width: 100%;
+            margin: 20px 0;
+            padding: 40px 20px;
+            text-align: left;
+            background: #1c1c1c;
+        }
+
+        .analytics-section h2 {
+            margin: 0 0 10px;
+            font-size: 2rem;
+            color: #ff6f61;
+        }
+
+        .analytics-section p {
+            margin: 0;
+            font-size: 1rem;
+            color: #ccc;
+        }
+
+        /* Footer */
+        footer {
+            padding: 20px;
+            font-size: 0.9rem;
+            background: #1c1c1c;
+            color: #999;
+            text-align: center;
+        }
+
+        footer a {
+            color: #ff6f61;
+            text-decoration: none;
+        }
+
+        .back-button {
+            background: #ff6f61;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+            display: none; /* Hide by default */
+        }
+        
+        .back-button.active {
+            display: block; /* Show when active */
+        }
+        
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Fitness Tracker</h1>
+        <p>Track your workout with AI-powered Pose Detection</p>
+    </header>
+
+    <!-- Analytics Section -->
+    <div id="analyticsSection" class="analytics-section">
+        <h2>Workout Analytics</h2>
+    </div>
+
+    <!-- Carousel Screen -->
+    <div id="carouselScreen" class="screen active">
+        <div class="carousel-container">
+            <div class="exercise-card" onclick="switchScreen('exerciseScreen', 'pushup')">
+                <img src="/assets/pushup.avif" alt="Pushups">
+                <h3>Pushups</h3>
+            </div>
+            <div class="exercise-card" onclick="switchScreen('exerciseScreen', 'lunges')">
+                <img src="/assets/lunges.jpg" alt="Lunges">
+                <h3>Lunges</h3>
+            </div>
+            <div class="exercise-card" onclick="switchScreen('exerciseScreen', 'bicepCurl')">
+                <img src="/assets/bicepcurl.webp" alt="Bicep Curls">
+                <h3>Bicep Curls</h3>
+            </div>
+            <div class="exercise-card" onclick="switchScreen('exerciseScreen', 'squat')">
+                <img src="/assets/squat.jpg" alt="Squats">
+                <h3>Squats</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exercise Screen -->
+    <div id="exerciseScreen" class="screen">
+        <button class="back-button" onclick="switchScreen('carouselScreen')">Back</button>
+        <div id="video-container">
+            <video id="video" autoplay></video>
+        </div>
+        <div id="output-container">
+            <canvas id="output"></canvas>
+        </div>
+    </div>
+
+    <!-- Exercise Screen -->
+    <div id="exerciseScreen" class="screen">
+        <button class="back-button" onclick="switchScreen('carouselScreen')">Back</button>
+        <div id="video-container">
+            <video id="video" autoplay></video>
+        </div>
+        <div id="output-container">
+            <canvas id="output"></canvas>
+        </div>
+    </div>
+
+
+    <footer>
+        <p>&copy; 2024 Fitness Tracker. Built with ❤️ and TensorFlow.js</p>
+        <p><a href="#">Privacy Policy</a> | <a href="#">Contact Us</a></p>
+    </footer>
+
+    <!-- TensorFlow and Pose Detection Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection"></script>
+
+    <!-- Common utilities -->
+    <script src="js/utils.js"></script>
+
+    <!-- Exercise specific scripts -->
+    <script src="js/pushup.js"></script>
+    <script src="js/lunges.js"></script>
+    <script src="js/bicepCurl.js"></script>
+    <script src="js/squat.js"></script>
+
+    <!-- Main script -->
+    <script>
+        // Function to switch screens
+        function switchScreen(screenId, exerciseType = null) {
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
+
+            // Show the selected screen
+            document.getElementById(screenId).classList.add('active');
+
+            // Show back button only when on estimation screen
+            if (screenId === 'estimationScreen') {
+                document.querySelectorAll('.back-button').forEach(button => button.classList.add('active'));
+            } else {
+                document.querySelectorAll('.back-button').forEach(button => button.classList.remove('active'));
+            }
+
+            // Initialize exercise detection if provided
+            if (exerciseType) {
+                initializeExercise(exerciseType);
+            }
+        }
+    </script>
+    <script src="js/main.js"></script>
+</body>
+</html>
