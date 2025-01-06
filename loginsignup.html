@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Signup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 400px;
+            background: #1c1c1c;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .container.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .container h1 {
+            text-align: center;
+            font-size: 2rem;
+            color: #ff6f61;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: #ccc;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            background: #282828;
+            color: #fff;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(255, 111, 97, 0.8);
+        }
+
+        .button {
+            width: 100%;
+            padding: 10px 0;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            color: #fff;
+            background: linear-gradient(45deg, #ff6f61, #f45d8d);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(255, 111, 97, 0.5);
+        }
+
+        body{
+            background-image: url('./assets/backgroundlogsig.webp');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .switch-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .switch-link a {
+            color: #ff6f61;
+            text-decoration: none;
+        }
+
+        .switch-link a:hover {
+            text-decoration: underline;
+        }
+
+        .try-button {
+            width: 100%;
+            padding: 10px 0;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            color: #fff;
+            background: #444;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .try-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(255, 111, 97, 0.5);
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="login-container">
+        <h1>Login</h1>
+        <form>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password">
+            </div>
+            <button type="button" class="button" onclick="switchToSignup()">Login</button>
+        </form>
+        <div class="switch-link">
+            <p>Don't have an account? <a href="#" onclick="switchToSignup()">Sign Up</a></p>
+        </div>
+        <button class="try-button" onclick="window.location.href='index.html'">Try Without Login/Signup</button>
+    </div>
+
+    <div class="container hidden" id="signup-container">
+        <h1>Sign Up</h1>
+        <form>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+                <label for="email-signup">Email</label>
+                <input type="email" id="email-signup" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="password-signup">Password</label>
+                <input type="password" id="password-signup" placeholder="Create a password">
+            </div>
+            <button type="button" class="button" onclick="switchToLogin()">Sign Up</button>
+        </form>
+        <div class="switch-link">
+            <p>Already have an account? <a href="#" onclick="switchToLogin()">Login</a></p>
+        </div>
+        <button class="try-button" onclick="window.location.href='index.html'">Try Without Login/Signup</button>
+    </div>
+
+    <script>
+        function switchToSignup() {
+            document.getElementById('login-container').classList.remove('show');
+            document.getElementById('signup-container').classList.add('show');
+            document.getElementById('login-container').classList.add('hidden');
+            document.getElementById('signup-container').classList.remove('hidden');
+        }
+
+        function switchToLogin() {
+            document.getElementById('signup-container').classList.remove('show');
+            document.getElementById('login-container').classList.add('show');
+            document.getElementById('signup-container').classList.add('hidden');
+            document.getElementById('login-container').classList.remove('hidden');
+        }
+
+        // Initially show the login form
+        document.getElementById('login-container').classList.add('show');
+    </script>
+</body>
+</html>
