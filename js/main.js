@@ -38,6 +38,13 @@ async function initializeExercise(exerciseType) {
     pushupDetector.reset();
     lungeDetector.reset();
     bicepCurlDetector.reset();
+    squatDetector.reset();
+    benchPressDetector.reset();
+    inclinePressDetector.reset();
+    overheadTricepDetector.reset();
+    lateralRaisesDetector.reset();
+    shoulderPressDetector.reset();
+    frontRaiseDetector.reset();
 
     // Set the appropriate detector
     switch(exerciseType) {
@@ -52,6 +59,24 @@ async function initializeExercise(exerciseType) {
             break;
         case 'squat':
             currentDetector = squatDetector;
+            break;
+        case 'benchPress':
+            currentDetector = benchPressDetector;
+            break;
+        case 'inclinePress':
+            currentDetector = inclinePressDetector;
+            break;
+        case 'overheadTricep':
+            currentDetector = overheadTricepDetector;
+            break;
+        case 'lateralRaises':
+            currentDetector = lateralRaisesDetector;
+            break;
+        case 'shoulderPress':
+            currentDetector = shoulderPressDetector;
+            break;
+        case 'frontRaise':
+            currentDetector = frontRaiseDetector;
             break;
     }
 
@@ -99,3 +124,4 @@ document.getElementById('bicepCurlButton').addEventListener('click', () => {
 document.getElementById('squatButton').addEventListener('click', () => {
     initializeExercise('squat');
 });
+

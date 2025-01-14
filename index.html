@@ -5,6 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fitness Tracker</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+
+        function openPushUpCounter() {
+            window.open('./Exercises/pushUp/pushup-counter.html', '_blank');
+        }
+        function openLungesCounter() {
+            window.open('./Exercises/lunges/lunges-counter.html', '_blank');
+        }
+        function openBicepCurlCounter() {
+            window.open('./Exercises/bicepCurl/bicepcurl-counter.html', '_blank');
+        }
+        function openSquatCounter() {
+            window.open('./Exercises/squat/squat-counter.html', '_blank');
+        }
+        function openBenchPressCounter() {
+            window.open('./Exercises/benchPress/benchPress-counter.html', '_blank');
+        }
+        function openFrontRaiseCounter() {
+            window.open('./Exercises/frontRaise/frontRaise-counter.html', '_blank');
+        }
+        function openInclinePressCounter() {
+            window.open('./Exercises/inclinePress/inclinePress-counter.html', '_blank');
+        }
+        function openLateralRaiseCounter() {
+            window.open('./Exercises/lateralRaise/lateralRaise-counter.html', '_blank');
+        }
+        function openOverHeadTricepCounter() {
+            window.open('./Exercises/overheadTricep/overheadTricep-counter.html', '_blank');
+        }
+        function openShoulderPressCounter() {
+            window.open('./Exercises/shoulderPress/shoulderPress-counter.html', '_blank');
+        }
+        function openTricepPushDownCounter() {
+            window.open('./Exercises/tricepPushDown/tricepPushDown-counter.html', '_blank');
+        }
+        /*
+        function navigateToScreen(screenId, exerciseType = null) {
+            document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+    
+            if (screenId === 'exerciseScreen') {
+                document.querySelector('.back-button').classList.add('active');
+            } else {
+                document.querySelector('.back-button').classList.remove('active');
+            }
+    
+            if (exerciseType) {
+                initializeExercise(exerciseType);
+            }
+        }
+            
+        // Function to switch screens
+        function switchScreen(screenId, exerciseType = null) {
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
+            // Show the selected screen
+            document.getElementById(screenId).classList.add('active');
+            // Show back button only when on estimation screen
+            if (screenId === 'estimationScreen') {
+                document.querySelectorAll('.back-button').forEach(button => button.classList.add('active'));
+            } else {
+                document.querySelectorAll('.back-button').forEach(button => button.classList.remove('active'));
+            }
+            // Initialize exercise detection if provided
+            if (exerciseType) {
+                initializeExercise(exerciseType);
+            }
+        }
+        */
+    </script>
+
     <style>
         body {
             margin: 0;
@@ -12,19 +83,19 @@
             background-color: #121212;
             color: #fff;
         }
-
+        
         header {
             padding: 20px;
             background: linear-gradient(45deg, #ff6f61, #f45d8d);
             color: #fff;
             text-align: center;
         }
-
+        
         header h1 {
             margin: 0;
             font-size: 2.5rem;
         }
-
+        
         /* Carousel Section */
         .carousel-container {
             display: flex;
@@ -35,11 +106,11 @@
             padding: 10px 0;
             scrollbar-width: none; /* Hide scrollbar in Firefox */
         }
-
+        
         .carousel-container::-webkit-scrollbar {
             display: none; /* Hide scrollbar in Chrome, Safari */
         }
-
+        
         .exercise-card {
             min-width: 200px;
             margin: 0 10px;
@@ -50,33 +121,33 @@
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
+        
         .exercise-card:hover {
             transform: scale(1.1);
             box-shadow: 0 6px 20px rgba(255, 111, 97, 0.5);
         }
-
+        
         .exercise-card img {
             width: 200px;
             height: 150px; /* Set a fixed height */
             object-fit: cover; /* Ensures the image is scaled and cropped to fit the dimensions */
             border-radius: 10px 10px 0 0; /* Maintain rounded corners */
         }
-
+        
         .exercise-card h3 {
             margin: 10px 0;
             font-size: 1.2rem;
         }
-
+        
         /* Exercise Screen */
         .screen {
             display: none;
         }
-
+        
         .screen.active {
             display: block;
         }
-
+        
         /* Video Section */
         #video-container, #output-container {
             margin: 20px auto;
@@ -84,16 +155,16 @@
             width: 80%;
             max-width: 640px;
         }
-
+        
         canvas {
             border-radius: 15px;
             width: 100%;
         }
-
+        
         video {
             display: none;
         }
-
+        
         /* Analytics Section */
         .analytics-section {
             width: 100%;
@@ -102,13 +173,13 @@
             text-align: left;
             background: #1c1c1c;
         }
-
+        
         .analytics-section p {
             margin: 0;
             font-size: 1rem;
             color: #ccc;
         }
-
+        
         /* Footer */
         footer {
             padding: 20px;
@@ -117,12 +188,12 @@
             color: #999;
             text-align: center;
         }
-
+        
         footer a {
             color: #ff6f61;
             text-decoration: none;
         }
-
+        
         .back-button {
             background: #ff6f61;
             color: #fff;
@@ -134,7 +205,7 @@
             margin: 10px 0;
             display: none; /* Hide by default */
         }
-
+        
         nav ul li a {
             color: #fff;
             text-decoration: none;
@@ -167,7 +238,7 @@
             font-size: 1.2rem;
             font-weight: bold;
         }
-    
+        
         .hr {
             border: none; /* Remove default border */
             height: 2px; /* Adjust thickness */
@@ -175,15 +246,16 @@
             width: 100%; /* Line spans full width */
             margin-top: 8px; /* Spacing between h2 and hr */
         }
-
+        
         .level-card:hover {
             transform: scale(1.1);
             box-shadow: 0 6px 20px rgba(255, 111, 97, 0.5);
             background: linear-gradient(45deg, #ff6f61, #f45d8d);
             color: #121212;
         }
-
+        
     </style>
+    
 </head>
 <body>
     <header>
@@ -216,22 +288,50 @@
         <h2 style="text-align: left; margin: 20px 20px; color: #ff6f61; font-size: 2rem;">Exercises</h2>
         <hr>
         <div class="carousel-container">
-            <div class="exercise-card" onclick="switchScreen('exerciseScreen', 'pushup')">
+            <div class="exercise-card" onclick="openPushUpCounter()">
                 <img src="/assets/pushup.avif" alt="Pushups">
                 <h3>Pushups</h3>
             </div>
-            <div class="exercise-card" onclick="switchScreen('exerciseScreen', 'lunges')">
+            <div class="exercise-card" onclick="openLungesCounter()">
                 <img src="/assets/lunges.jpg" alt="Lunges">
                 <h3>Lunges</h3>
             </div>
-            <div class="exercise-card" onclick="switchScreen('exerciseScreen', 'bicepCurl')">
+            <div class="exercise-card" onclick="openBicepCurlCounter()">
                 <img src="/assets/bicepcurl.webp" alt="Bicep Curls">
                 <h3>Bicep Curls</h3>
             </div>
-            <div class="exercise-card" onclick="switchScreen('exerciseScreen', 'squat')">
+            <div class="exercise-card" onclick="openSquatCounter()">
                 <img src="/assets/squat.jpg" alt="Squats">
                 <h3>Squats</h3>
             </div>
+            <div class="exercise-card" onclick="openBenchPressCounter()">
+                <img src="/assets/benchpress.webp" alt="Bench Press">
+                <h3>Bench Press</h3>
+            </div>
+            <div class="exercise-card" onclick="openInclinePressCounter()">
+                <img src="/assets/inclinepress.webp" alt="Incline Press">
+                <h3>Incline Press</h3>
+            </div>
+            <div class="exercise-card" onclick="openOverHeadTricepCounter()">
+                <img src="/assets/overheadtricep.jpg" alt="Overhead Tricep Extension">
+                <h3>Overhead Tricep Extension</h3>
+            </div>
+            <div class="exercise-card" onclick="openTricepPushDownCounter()">
+                <img src="/assets/tricepPushDown.webp" alt="Tricep PushDown">
+                <h3>Tricep PushDown</h3>
+            </div>
+            <div class="exercise-card" onclick="openLateralRaiseCounter()">
+                <img src="/assets/lateralraises.jpg" alt="Lateral Raises">
+                <h3>Lateral Raises</h3>
+            </div>
+            <div class="exercise-card" onclick="openShoulderPressCounter()">
+                <img src="/assets/shoulderpress.jpg" alt="Shoulder Press">
+                <h3>Shoulder Press</h3>
+            </div>
+            <div class="exercise-card" onclick="openFrontRaiseCounter()">
+                <img src="/assets/frontraise.jpg" alt="Front Raise">
+                <h3>Front Raise</h3>
+            </div>            
         </div>
     </div>
 
@@ -272,55 +372,26 @@
     <!-- TensorFlow and Pose Detection Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection"></script>
-
+    
     <!-- Common utilities -->
     <script src="js/utils.js"></script>
-
+    <script src="js/main.js"></script>
     <!-- Exercise specific scripts -->
     <script src="js/pushup.js"></script>
     <script src="js/lunges.js"></script>
     <script src="js/bicepCurl.js"></script>
     <script src="js/squat.js"></script>
+    <script src="js/benchPress.js"></script>
+    <script src="js/inclinePress.js"></script>
+    <script src="js/overheadTricep.js"></script>
+    <script src="js/lateralRaises.js"></script>
+    <script src="js/shoulderPress.js"></script>
+    <script src="js/frontRaise.js"></script>
+    <script src="Exercises/pushup/pushup.js"></script>
+    <script src="Exercises/pushup/pushup-counter.html"></script>
+    
 
     <!-- Main script -->
-    <script>
-
-        function navigateToScreen(screenId, exerciseType = null) {
-            document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
     
-            if (screenId === 'exerciseScreen') {
-                document.querySelector('.back-button').classList.add('active');
-            } else {
-                document.querySelector('.back-button').classList.remove('active');
-            }
-    
-            if (exerciseType) {
-                initializeExercise(exerciseType);
-            }
-        }
-
-        // Function to switch screens
-        function switchScreen(screenId, exerciseType = null) {
-            // Hide all screens
-            document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
-
-            // Show the selected screen
-            document.getElementById(screenId).classList.add('active');
-
-            // Show back button only when on estimation screen
-            if (screenId === 'estimationScreen') {
-                document.querySelectorAll('.back-button').forEach(button => button.classList.add('active'));
-            } else {
-                document.querySelectorAll('.back-button').forEach(button => button.classList.remove('active'));
-            }
-
-            // Initialize exercise detection if provided
-            if (exerciseType) {
-                initializeExercise(exerciseType);
-            }
-        }
-    </script>
-    <script src="js/main.js"></script>
 </body>
 </html>

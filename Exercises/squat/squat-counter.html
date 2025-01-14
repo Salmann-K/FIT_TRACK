@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Squat</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #121212;
+      color: #fff;
+  }
+
+  header {
+      padding: 20px;
+      background: linear-gradient(45deg, #ff6f61, #f45d8d);
+      color: #fff;
+      text-align: center;
+  }
+
+  header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+  }
+    canvas {
+      display: block;
+      margin: 20px auto;
+      border: 1px solid #ddd;
+      background: #000;
+    }
+    video {
+      display: none; /* Hide the video element */
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Fit-Track</h1>
+    <p>Track your workout with AI-powered Pose Detection</p>
+</header>
+  <canvas id="output"></canvas>
+  <video id="video" autoplay playsinline></video>
+  <script src="squat.js"></script>
+</body>
+</html>
+
+
