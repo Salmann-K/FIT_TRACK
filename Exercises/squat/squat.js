@@ -1,6 +1,11 @@
+const params = new URLSearchParams(window.location.search);
+const stopCount = parseInt(params.get("stopCount")) || Infinity; // Default to no limit if not provided
+const redirectUrl = params.get("redirectUrl");
+
 const video = document.getElementById('video'); // Hidden video element
 const canvas = document.getElementById('output'); // Visible canvas
 const ctx = canvas.getContext('2d');
+
 
 let count = 0;
 let position = "standing"; // Assume starting in the standing position
@@ -88,6 +93,14 @@ async function detectPose() {
         ctx.fill();
       }
     });
+
+    if (count >= stopCount) {
+      alert(`Squat goal reached: ${count}`);
+      if (redirectUrl) {
+        window.location.href = redirectUrl;
+      }
+      return; // Stop further detection
+    }
 
       // Display the squat count on the screen
       ctx.fillStyle = "green";

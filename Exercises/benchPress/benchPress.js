@@ -1,3 +1,7 @@
+const params = new URLSearchParams(window.location.search);
+const stopCount = parseInt(params.get("stopCount")) || Infinity; // Default to no limit if not provided
+const redirectUrl = params.get("redirectUrl");
+
 const video = document.getElementById("video"); // Hidden video element
 const canvas = document.getElementById("output"); // Visible canvas
 const ctx = canvas.getContext("2d");
@@ -87,6 +91,14 @@ async function detectPose() {
   ctx.font = "24px Arial";
   ctx.fillStyle = "green";
   ctx.fillText(`Bench Press Reps: ${count}`, 10, 30);
+
+  if (count >= stopCount) {
+    alert(`Bench Press goal reached: ${count}`);
+    if (redirectUrl) {
+      window.location.href = redirectUrl;
+    }
+    return; // Stop further detection
+  }
 
   requestAnimationFrame(detectPose);
 }

@@ -1,3 +1,8 @@
+const params = new URLSearchParams(window.location.search);
+const stopCount = parseInt(params.get("stopCount")) || Infinity; // Default to no limit if not provided
+const redirectUrl = params.get("redirectUrl");
+
+
 const video = document.getElementById('video'); // Hidden video element
 const canvas = document.getElementById('output'); // Visible canvas
 const ctx = canvas.getContext('2d');
@@ -89,6 +94,14 @@ async function detectPose() {
         ctx.fill();
       }
     });
+
+    if (count >= stopCount) {
+      alert(`Bicep Curl goal reached: ${count}`);
+      if (redirectUrl) {
+        window.location.href = redirectUrl;
+      }
+      return; // Stop further detection
+    }
 
     // Display the curl count on the screen
     ctx.fillStyle = "green";
