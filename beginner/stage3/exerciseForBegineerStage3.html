@@ -4,6 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BeginnerExerciseSection</title>
+    <script>
+        function openPushUpCounter(stopCount) {
+            const redirectUrl = window.location.href; // Get the current page URL
+          
+            // Construct the URL with query parameters
+            const url = `../.././Exercises/pushUp/pushup-counter.html?stopCount=${stopCount}&redirectUrl=${encodeURIComponent(redirectUrl)}`;
+          
+            // Open the new window with the constructed URL
+            window.open(url, '_blank');
+        }
+        function openLungesCounter(stopCount) {
+            const redirectUrl = window.location.href; 
+            const url = `../.././Exercises/pushUp/pushup-counter.html?stopCount=${stopCount}&redirectUrl=${encodeURIComponent(redirectUrl)}`;
+            window.open(url, '_blank');
+        }
+        function openBicepCurlCounter(stopCount) {
+            const redirectUrl = window.location.href;
+            const url = `../.././Exercises/pushUp/pushup-counter.html?stopCount=${stopCount}&redirectUrl=${encodeURIComponent(redirectUrl)}`;
+            window.open(url, '_blank');
+        }
+        function openSquatCounter(stopCount) {
+            const redirectUrl = window.location.href; 
+            const url = `../.././Exercises/pushUp/pushup-counter.html?stopCount=${stopCount}&redirectUrl=${encodeURIComponent(redirectUrl)}`;
+            window.open(url, '_blank');
+        }
+        function openShoulderPressCounter(stopCount) {
+            const redirectUrl = window.location.href;
+            const url = `../.././Exercises/pushUp/pushup-counter.html?stopCount=${stopCount}&redirectUrl=${encodeURIComponent(redirectUrl)}`;
+            window.open(url, '_blank');
+        }
+    </script>
     <style>
         body {
             margin: 0;
@@ -98,7 +129,58 @@
             text-decoration: none;
         }
 
+        .exercise-card {
+            width: 300px;
+            height: 200px;
+            margin: 0 10px;
+            border-radius: 10px;
+            background: #282828;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .exercise-card:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 111, 97, 0.5);
+        }
+        
+        .exercise-card img {
+            width: 300px;
+            height: 100px; /* Set a fixed height */
+            object-fit: cover; /* Ensures the image is scaled and cropped to fit the dimensions */
+            border-radius: 10px 10px 0 0; /* Maintain rounded corners */
+        }
+        
+        .set-cards-container {
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+        }
+    
+        .set-card {
+            width: 200px;
+            height: 130px;
+            border-radius: 8px;
+            background: #f45d8d;
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+    
+        .set-card:hover {
+            transform: scale(1.1);
+            background: #ff6f61;
+        }
+
     </style>
+
 </head>
 <body>
     <header>
@@ -109,42 +191,72 @@
     <h2 style="text-align: left; margin: 20px 20px; color: #ff6f61; font-size: 2rem;">Exercises</h2>
 
     <div id="personalizedSection" class="screen active">
-        <div style="display: flex; flex-direction: column; gap: 20px; margin: 20px;">
+        <div style="display: flex; flex-direction: column; gap: 70px; margin: 20px;">
 
-            <!-- Stage 1 -->
-            <div class="level-cards-container">
-                <div class="level-card" onclick="window.location.href='beginner.html'">
-                    <h3>Stage 1</h3>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div class="exercise-card" >
+                    <img src="/assets/pushup.avif" alt="Pushups" style="width: 100%; height: 100%; object-fit: cover;">
+                    <h3>Pushups</h3>
                 </div>
-            </div>
-    
-            <!-- Stage 2 -->
-            <div class="level-cards-container">
-                <div class="level-card" onclick="window.location.href='intermediate.html'">
-                    <h3>Stage 2</h3>
-                </div>
-            </div>
-    
-            <!-- Stage 3 -->
-            <div class="level-cards-container">
-                <div class="level-card" onclick="window.location.href='advance.html'">
-                    <h3>Stage 3</h3>
-                </div>
-            </div>
-
-            <div class="level-cards-container">
-                <div class="level-card" onclick="window.location.href='advance.html'">
-                    <h3>Stage 3</h3>
-                </div>
-            </div>
-
-            <div class="level-cards-container">
-                <div class="level-card" onclick="window.location.href='advance.html'">
-                    <h3>Stage 3</h3>
+                <div class="set-cards-container">
+                    <div class="set-card" onclick="openPushUpCounter(10)">Set 1</div>
+                    <div class="set-card" onclick="openPushUpCounter(15)">Set 2</div>
+                    <div class="set-card" onclick="openPushUpCounter(20)">Set 3</div>
+                    <div class="set-card" onclick="openPushUpCounter(20)">Set 4</div>
                 </div>
             </div>
             
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div class="exercise-card" >
+                    <img src="/assets/lunges.jpg" alt="Lunges" style="width: 100%; height: 100%; object-fit: cover;">
+                    <h3>Lunges</h3>
+                </div>
+                <div class="set-cards-container">
+                    <div class="set-card" onclick="openLungesCounter(10)">Set 1</div>
+                    <div class="set-card" onclick="openLungesCounter(15)">Set 2</div>
+                    <div class="set-card" onclick="openLungesCounter(20)">Set 3</div>
+                    <div class="set-card" onclick="openLungesCounter(20)">Set 4</div>
+                </div>
+            </div>
+    
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div class="exercise-card" >
+                    <img src="/assets/squat.jpg" alt="Squats" style="width: 100%; height: 100%; object-fit: cover;">
+                    <h3>Squats</h3>
+                </div>
+                <div class="set-cards-container">
+                    <div class="set-card" onclick="openSquatCounter(10)">Set 1</div>
+                    <div class="set-card" onclick="openSquatCounter(15)">Set 2</div>
+                    <div class="set-card" onclick="openSquatCounter(20)">Set 3</div>
+                    <div class="set-card" onclick="openSquatCounter(20)">Set 4</div>
+                </div>
+            </div>
 
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div class="exercise-card" >
+                    <img src="/assets/shoulderpress.jpg" alt="Shoulder Press" style="width: 100%; height: 100%; object-fit: cover;">
+                    <h3>Shoulder Press</h3>
+                </div>
+                <div class="set-cards-container">
+                    <div class="set-card" onclick="openShoulderPressCounter(10)">Set 1</div>
+                    <div class="set-card" onclick="openShoulderPressCounter(15)">Set 2</div>
+                    <div class="set-card" onclick="openShoulderPressCounter(20)">Set 3</div>
+                    <div class="set-card" onclick="openShoulderPressCounter(20)">Set 4</div>
+                </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div class="exercise-card" >
+                    <img src="/assets/bicepcurl.webp" alt="Bicep Curls" style="width: 100%; height: 100%; object-fit: cover;">
+                    <h3>Bicep Curls</h3>
+                </div>
+                <div class="set-cards-container">
+                    <div class="set-card" onclick="openBicepCurlCounter(10)">Set 1</div>
+                    <div class="set-card" onclick="openBicepCurlCounter(15)">Set 2</div>
+                    <div class="set-card" onclick="openBicepCurlCounter(20)">Set 3</div>
+                    <div class="set-card" onclick="openBicepCurlCounter(20)">Set 4</div>
+                </div>
+            </div>
         </div>
     </div>
 
