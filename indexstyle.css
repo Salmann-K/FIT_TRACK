@@ -1,0 +1,180 @@
+
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212;
+            color: #fff;
+        }
+        
+        header {
+            padding: 20px;
+            background: linear-gradient(45deg, #ff6f61, #f45d8d);
+            color: #fff;
+            text-align: center;
+        }
+        
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        /* Carousel Section */
+        .carousel-container {
+            display: flex;
+            overflow-x: auto;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+            margin: 20px 0;
+            padding: 10px 0;
+            scrollbar-width: none; /* Hide scrollbar in Firefox */
+        }
+        
+        .carousel-container::-webkit-scrollbar {
+            display: none; /* Hide scrollbar in Chrome, Safari */
+        }
+        
+        .exercise-card {
+            min-width: 200px;
+            margin: 0 10px;
+            border-radius: 10px;
+            background: #282828;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .exercise-card:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 111, 97, 0.5);
+        }
+        
+        .exercise-card img {
+            width: 200px;
+            height: 150px; /* Set a fixed height */
+            object-fit: cover; /* Ensures the image is scaled and cropped to fit the dimensions */
+            border-radius: 10px 10px 0 0; /* Maintain rounded corners */
+        }
+        
+        .exercise-card h3 {
+            margin: 10px 0;
+            font-size: 1.2rem;
+        }
+        
+        /* Exercise Screen */
+        .screen {
+            display: none;
+        }
+        
+        .screen.active {
+            display: block;
+        }
+        
+        /* Video Section */
+        #video-container, #output-container {
+            margin: 20px auto;
+            position: relative;
+            width: 80%;
+            max-width: 640px;
+        }
+        
+        canvas {
+            border-radius: 15px;
+            width: 100%;
+        }
+        
+        video {
+            display: none;
+        }
+        
+        /* Analytics Section */
+        .analytics-section {
+            width: 100%;
+            margin: 0 auto;
+            padding: 10px 0 10px;
+            text-align: left;
+            background: #1c1c1c;
+        }
+        
+        .analytics-section p {
+            margin: 0;
+            font-size: 1rem;
+            color: #ccc;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 20px;
+            font-size: 0.9rem;
+            background: #1c1c1c;
+            color: #999;
+            text-align: center;
+        }
+        
+        footer a {
+            color: #ff6f61;
+            text-decoration: none;
+        }
+        
+        .back-button {
+            background: #ff6f61;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+            display: none; /* Hide by default */
+        }
+        
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: transform 0.3s ease, color 0.3s ease; /* Smooth transition for scaling and color */
+        }
+        
+        nav ul li a:hover {
+            color: #ff6f61; /* Change color on hover */
+            transform: scale(1.2); /* Scale up slightly */
+        }
+        
+        .back-button.active {
+            display: block; /* Show when active */
+        }
+        
+        .level-card {
+            width: 300px;
+            height: 200px;
+            margin: 0 10px;
+            border-radius: 10px;
+            background: #282828;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hr {
+            border: none; /* Remove default border */
+            height: 2px; /* Adjust thickness */
+            background-color: white; /* Line color */
+            width: 100%; /* Line spans full width */
+            margin-top: 8px; /* Spacing between h2 and hr */
+        }
+        
+        .level-card:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 111, 97, 0.5);
+            background: linear-gradient(45deg, #ff6f61, #f45d8d);
+            color: #121212;
+        }
+
+        .level-card img{
+            width: 300px;
+            height: 100px; /* Set a fixed height */
+            object-fit: cover; /* Ensures the image is scaled and cropped to fit the dimensions */
+            border-radius: 10px 10px 0 0; /* Maintain rounded corners */
+        }
+        
