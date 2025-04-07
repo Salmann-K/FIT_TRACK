@@ -1,92 +1,112 @@
-// Import the functions you need from the SDKs you need
+// Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
-import{getFirestore, setDoc, doc} from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js"
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+import { getFirestore, setDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
 
+// Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDQ-SzneOPvJlRsViEp7oafP-QcUx3JlOM",
   authDomain: "fittrack-bff5b.firebaseapp.com",
   projectId: "fittrack-bff5b",
-  storageBucket: "fittrack-bff5b.firebasestorage.app",
+  storageBucket: "fittrack-bff5b.appspot.com",
   messagingSenderId: "531769032525",
   appId: "1:531769032525:web:ac070719efe67924450104"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-function showMessage(message, divId){
-   var messageDiv=document.getElementById(divId);
-   messageDiv.style.display="block";
-   messageDiv.innerHTML=message;
-   messageDiv.style.opacity=1;
-   setTimeout(function(){
-       messageDiv.style.opacity=0;
-   },5000);
+// Function to store user data in localStorage
+function storeUserData(userData) {
+  localStorage.setItem("loggedInUser", JSON.stringify(userData));
 }
-const signUp=document.getElementById('submitSignUp');
-signUp.addEventListener('click', (event)=>{
-   event.preventDefault();
-   const email=document.getElementById('rEmail').value;
-   const password=document.getElementById('rPassword').value;
-   const firstName=document.getElementById('fName').value;
-   const lastName=document.getElementById('lName').value;
 
-   const auth=getAuth();
-   const db=getFirestore();
+// Function to retrieve user data
+export function getUserData() {
+  return JSON.parse(localStorage.getItem("loggedInUser"));
+}
 
-   createUserWithEmailAndPassword(auth, email, password)
-   .then((userCredential)=>{
-       const user=userCredential.user;
-       const userData={
-           email: email,
-           firstName: firstName,
-           lastName:lastName
-       };
-       showMessage('Account Created Successfully', 'signUpMessage');
-       const docRef=doc(db, "users", user.uid);
-       setDoc(docRef,userData)
-       .then(()=>{
-           window.location.href='index.html';
-       })
-       .catch((error)=>{
-           console.error("error writing document", error);
+// Function to check if user is logged in
+export function isUserLoggedIn() {
+  return localStorage.getItem("loggedInUser") !== null;
+}
 
-       });
-   })
-   .catch((error)=>{
-       const errorCode=error.code;
-       if(errorCode=='auth/email-already-in-use'){
-           showMessage('Email Address Already Exists !!!', 'signUpMessage');
-       }
-       else{
-           showMessage('unable to create User', 'signUpMessage');
-       }
-   })
+// 🔹 SIGNUP FUNCTION
+document.querySelector("#signup form")?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const email = document.getElementById("rEmail").value.trim();
+  const password = document.getElementById("rPassword").value.trim();
+  const firstName = document.getElementById("fName").value.trim();
+  const lastName = document.getElementById("lName").value.trim();
+
+  if (!email || !password || !firstName || !lastName) {
+    alert("All fields are required!");
+    return;
+  }
+
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    const userData = {
+      uid: user.uid,
+      email,
+      firstName,
+      lastName,
+      createdAt: new Date().toISOString(),
+    };
+
+    await setDoc(doc(db, "users", user.uid), userData);
+    storeUserData(userData);  // Store user data in localStorage
+
+    alert("Account Created Successfully!");
+    window.location.href = "index.html";  // Redirect after successful login
+  } catch (error) {
+    console.error("Signup Error:", error);
+    alert("Signup failed! Try again.");
+  }
 });
 
-const signIn=document.getElementById('submitSignIn');
-signIn.addEventListener('click', (event)=>{
-   event.preventDefault();
-   const email=document.getElementById('email').value;
-   const password=document.getElementById('password').value;
-   const auth=getAuth();
+// 🔹 LOGIN FUNCTION
+document.querySelector("#signIn form")?.addEventListener("submit", async (event) => {
+  event.preventDefault();
 
-   signInWithEmailAndPassword(auth, email,password)
-   .then((userCredential)=>{
-       showMessage('login is successful', 'signInMessage');
-       const user=userCredential.user;
-       localStorage.setItem('loggedInUserId', user.uid);
-       window.location.href='homepage.html';
-   })
-   .catch((error)=>{
-       const errorCode=error.code;
-       if(errorCode==='auth/invalid-credential'){
-           showMessage('Incorrect Email or Password', 'signInMessage');
-       }
-       else{
-           showMessage('Account does not Exist', 'signInMessage');
-       }
-   })
-})
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
 
+  if (!email || !password) {
+    alert("Please enter both email and password!");
+    return;
+  }
+
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    const docRef = doc(db, "users", user.uid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const userData = docSnap.data();
+      storeUserData(userData);  // Store user data in localStorage
+
+      alert("Login successful!");
+      window.location.href = "../index.html";  // Redirect to dashboard
+    } else {
+      alert("User data not found!");
+    }
+  } catch (error) {
+    console.error("Login Error:", error);
+    alert("Incorrect Email or Password!");
+  }
+});
+
+// 🔹 LOGOUT FUNCTION
+document.getElementById("logoutBtn")?.addEventListener("click", () => {
+  localStorage.removeItem("loggedInUser");  // Remove user data from localStorage
+  alert("Logged out successfully!");
+  window.location.href = "index.html";  // Redirect to homepage
+});

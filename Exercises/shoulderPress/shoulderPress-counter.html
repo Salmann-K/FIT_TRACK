@@ -37,12 +37,16 @@
   </style>
 </head>
 <body>
+  <script type="module" src="shoulderPress.js"></script>
   <header>
     <h1>Fit-Track</h1>
     <p>Track your workout with AI-powered Pose Detection</p>
 </header>
   <canvas id="output"></canvas>
   <video id="video" autoplay playsinline></video>
+  <div id="error-box" 
+     style="position:absolute; top:10px; right:10px; background:white; 
+            padding:10px; border:2px solid black; font-size:18px;"></div>
   <script src="shoulderPress.js"></script>
 </body>
 </html>

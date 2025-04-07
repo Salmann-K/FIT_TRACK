@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Four Days</title>
+    <link rel="stylesheet" href="fourday.css">
+</head>
+<body>
+    <header>
+        <h1>Fit-Track</h1>
+        <p>Track your workout with AI-powered Pose Detection</p>
+    </header>
+
+    <h2 style="text-align: left; margin: 20px 20px; color: #ff6f61; font-size: 2rem;">Each Day Exercise</h2>
+    <div style="height: 15px;"></div>
+
+    <div id="personalizedSection" class="screen active">
+        <div style="display: flex; flex-direction: column; gap: 20px; margin: 20px;">
+            
+            <div style="display: flex; align-items: center; gap: 50px;">
+                <div class="level-card" style="flex: 1; cursor: pointer;" onclick="window.location.href='Chest&Tricep.html'">
+                    <img src="../../assets/chest&tricep.png" alt="Chest&Tricep Day" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">
+
+                </div>
+                <div class="textarea-container">
+                    <label for="beginner-stage1">Chest & Tricep Day:</label>
+                </div>
+            </div>
+            <div style="height: 10px;"></div>
+            <div style="display: flex; align-items: center; gap: 50px;">
+                <div class="level-card" style="flex: 1; cursor: pointer;" onclick="window.location.href='Back&Bicep.html'">
+                    <img src="../../assets/back&bicep.webp" alt="Back&Bicep Day" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">
+                </div>
+                <div class="textarea-container">
+                    <label for="beginner-stage2">Back & Bicep Day:</label>
+                </div>
+            </div>
+            <div style="height: 10px;"></div>
+            <div style="display: flex; align-items: center; gap: 50px;">
+                <div class="level-card" style="flex: 1; cursor: pointer;" onclick="window.location.href='Shoulder&Abs.html'">
+                    <img src="../../assets/shoulderday.jpg" alt="Shoulder&Abs Day" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">
+                </div>
+                <div class="textarea-container">
+                    <label for="beginner-stage3">Shoulder & Abs:</label>
+                </div>
+            </div>
+            <div style="height: 10px;"></div>
+            <div style="display: flex; align-items: center; gap: 50px;">
+                <div class="level-card" style="flex: 1; cursor: pointer;" onclick="window.location.href='Leg.html'">
+                    <img src="../../assets/legday.jpg" alt="Leg Day" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">
+                </div>
+                <div class="textarea-container">
+                    <label for="beginner-stage3">Leg Day:</label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div style="height: 80px;"></div>
+
+    <footer>
+        <p>&copy; 2024 Fitness Tracker. Built with ❤️ and TensorFlow.js</p>
+        <p><a href="#">Privacy Policy</a> | <a href="#">Contact Us</a></p>
+    </footer>
+</body>
+</html>

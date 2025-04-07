@@ -1,3 +1,6 @@
+import { saveExerciseLog } from "../../exerciseLogger.js";
+
+
 const params = new URLSearchParams(window.location.search);
 const stopCount = parseInt(params.get("stopCount")) || Infinity; // Default to no limit if not provided
 const redirectUrl = params.get("redirectUrl");
@@ -9,6 +12,7 @@ const ctx = canvas.getContext("2d");
 let count = 0;
 let position = null;
 let detector;
+let startTime = null;
 
 // Function to set up the camera
 async function setupCamera() {
@@ -58,6 +62,10 @@ async function detectPose() {
         position = "up"; // Elbows are above shoulders
         count++;
       }
+
+      if(count==1){
+        startTime = Date.now;
+      }
     }
 
     // Draw keypoints
@@ -83,10 +91,16 @@ async function detectPose() {
   ctx.fillText(`Shoulder Presses: ${count}`, 10, 30);
 
   if (count >= stopCount) {
+    const elapsedTime = Math.round((Date.now() - startTime) / 1000);
+    saveExerciseLog("ShoulderPress", stopCount, elapsedTime);
     alert(`Shoulder Press goal reached: ${count}`);
+  
     if (redirectUrl) {
-      window.location.href = redirectUrl;
+      setTimeout(() => {
+        window.location.href = redirectUrl;
+      }, 2000); // 5 seconds delay before redirection
     }
+  
     return; // Stop further detection
   }
 

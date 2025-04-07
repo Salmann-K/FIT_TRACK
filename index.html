@@ -6,76 +6,10 @@
     <title>Fitness Tracker</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="indexstyle.css">
-    <script>
-
-        function openPushUpCounter() {
-            window.open('./Exercises/pushUp/pushup-counter.html', '_blank');
-        }
-        function openLungesCounter() {
-            window.open('./Exercises/lunges/lunges-counter.html', '_blank');
-        }
-        function openBicepCurlCounter() {
-            window.open('./Exercises/bicepCurl/bicepcurl-counter.html', '_blank');
-        }
-        function openSquatCounter() {
-            window.open('./Exercises/squat/squat-counter.html', '_blank');
-        }
-        function openBenchPressCounter() {
-            window.open('./Exercises/benchPress/benchPress-counter.html', '_blank');
-        }
-        function openFrontRaiseCounter() {
-            window.open('./Exercises/frontRaise/frontRaise-counter.html', '_blank');
-        }
-        function openInclinePressCounter() {
-            window.open('./Exercises/inclinePress/inclinePress-counter.html', '_blank');
-        }
-        function openLateralRaiseCounter() {
-            window.open('./Exercises/lateralRaise/lateralRaise-counter.html', '_blank');
-        }
-        function openOverHeadTricepCounter() {
-            window.open('./Exercises/overheadTricep/overheadTricep-counter.html', '_blank');
-        }
-        function openShoulderPressCounter() {
-            window.open('./Exercises/shoulderPress/shoulderPress-counter.html', '_blank');
-        }
-        function openTricepPushDownCounter() {
-            window.open('./Exercises/tricepPushDown/tricepPushDown-counter.html', '_blank');
-        }
-        /*
-        function navigateToScreen(screenId, exerciseType = null) {
-            document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
-    
-            if (screenId === 'exerciseScreen') {
-                document.querySelector('.back-button').classList.add('active');
-            } else {
-                document.querySelector('.back-button').classList.remove('active');
-            }
-    
-            if (exerciseType) {
-                initializeExercise(exerciseType);
-            }
-        }
-            
-        // Function to switch screens
-        function switchScreen(screenId, exerciseType = null) {
-            // Hide all screens
-            document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
-            // Show the selected screen
-            document.getElementById(screenId).classList.add('active');
-            // Show back button only when on estimation screen
-            if (screenId === 'estimationScreen') {
-                document.querySelectorAll('.back-button').forEach(button => button.classList.add('active'));
-            } else {
-                document.querySelectorAll('.back-button').forEach(button => button.classList.remove('active'));
-            }
-            // Initialize exercise detection if provided
-            if (exerciseType) {
-                initializeExercise(exerciseType);
-            }
-        }
-        */
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="index.js"></script>
+    <script type="module" src="./userauthentication/profilepage.js"></script>
+    <script type="module" src="./logout.js"></script>
 </head>
 <body>
     <header>
@@ -84,23 +18,158 @@
     </header>
 
     <!-- Navigation Bar -->
-    <nav style="background-color: #1c1c1c; padding: 10px 0; position: sticky; top: 0; z-index: 1000;">
-        <ul style="list-style: none; display: flex; justify-content: space-around; margin: 0; padding: 0;">
+    <nav style="background-color: #1c1c1c; padding: 10px 0; position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; padding: 10px 20px;">
+        <ul style="list-style: none; display: flex; justify-content: space-around; margin: 0; padding: 0; flex-grow: 1;">
             <li><a href="#analyticsSection">Home</a></li>
             <li><a href="#carouselScreen">Exercise</a></li>
-            <li><a href="#personalizedSection">Analytics</a></li>
-            <li><a href="#video-container">Personalized</a></li>
+            <li><a href="#analyticsSection">Analytics</a></li>
+            <li><a href="#personalizedSection">Personalized</a></li>
             <li><a href="#footer">Contact</a></li>
         </ul>
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <div id="userInfo" style="color: white;"></div>
+            <button class="menu-button" onclick="toggleMenu()">☰</button>
+        </div>
+        <div id="menu" class="menu">
+            <a href="./userauthentication/profilepage.html">Profile</a>
+            <a href="./bmi.html">BMI Calculator</a>
+            <button id="logout" class="btn">Logout</button>
+        </div>
+        <script type="module">
+            import { getUserData } from "./auth.js";
+        
+            document.addEventListener("DOMContentLoaded", () => {
+                const user = getUserData();
+                const userInfoDiv = document.getElementById("userInfo");
+        
+                if (user) {
+                    userInfoDiv.innerHTML = `👤 ${user.firstName}`;
+                } else {
+                    userInfoDiv.innerHTML = `<a href="./userauthentication/index.html" style="color: white;">Login</a>`;
+                }
+            });
+            
+        </script>
     </nav>
-    
 
     <!-- Analytics Section -->
     <div id="analyticsSection" class="analytics-section">
         <hr>
         <h2 style="text-align: left; margin: 20px 20px; color: #ff6f61; font-size: 2rem;">Workout Analytics</h2>
+        <div style="text-align: center; margin-bottom: 20px;">
+            <button id="toggleAnalytics" style="padding: 10px 20px; font-size: 16px; background-color: #ff6f61; color: white; border: none; cursor: pointer; border-radius: 5px;">Switch to Streak Analytics</button>
+        </div>
+        <canvas id="exerciseChart" width="300" height="100"></canvas>
+        <canvas id="streakChart" width="300" height="100" style="display: none;"></canvas>
         <hr>
     </div>
+
+    <!--Script for analytics section-->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+        import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+        import { getUserData } from "./auth.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyDQ-SzneOPvJlRsViEp7oafP-QcUx3JlOM",
+            authDomain: "fittrack-bff5b.firebaseapp.com",
+            projectId: "fittrack-bff5b",
+            storageBucket: "fittrack-bff5b.firebasestorage.app",
+            messagingSenderId: "531769032525",
+            appId: "1:531769032525:web:ac070719efe67924450104"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        let currentAnalytics = "exercise";
+        
+        document.getElementById("toggleAnalytics").addEventListener("click", () => {
+            if (currentAnalytics === "exercise") {
+                document.getElementById("exerciseChart").style.display = "none";
+                document.getElementById("streakChart").style.display = "block";
+                document.getElementById("toggleAnalytics").innerText = "Switch to Exercise Analytics";
+                loadStreakAnalytics();
+                currentAnalytics = "streak";
+            } else {
+                document.getElementById("exerciseChart").style.display = "block";
+                document.getElementById("streakChart").style.display = "none";
+                document.getElementById("toggleAnalytics").innerText = "Switch to Streak Analytics";
+                loadExerciseAnalytics();
+                currentAnalytics = "exercise";
+            }
+        });
+        
+        async function loadExerciseAnalytics() {
+            const user = getUserData();
+            if (!user) return;
+            const userId = user.uid;
+            const q = query(collection(db, "exercise_logs"), where("user_id", "==", userId));
+            const querySnapshot = await getDocs(q);
+            let exerciseData = {};
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                const exercise = data.exercise_id;
+                const reps = data.reps;
+                const date = data.date;
+                if (!exerciseData[exercise]) {
+                    exerciseData[exercise] = {};
+                }
+                exerciseData[exercise][date] = (exerciseData[exercise][date] || 0) + reps;
+            });
+            renderChart("exerciseChart", exerciseData);
+        }
+        
+        async function loadStreakAnalytics() {
+            const user = getUserData();
+            if (!user) return;
+            const userId = user.uid;
+            const q = query(collection(db, "exercise_logs"), where("user_id", "==", userId));
+            const querySnapshot = await getDocs(q);
+            let streakData = {};
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                const date = data.date;
+                streakData[date] = (streakData[date] || 0) + 1;
+            });
+            renderChart("streakChart", { "Workout Streak": streakData });
+        }
+        
+        function renderChart(canvasId, dataObj) {
+            const ctx = document.getElementById(canvasId).getContext("2d");
+            const allDates = [...new Set(Object.values(dataObj).flatMap(exercise => Object.keys(exercise)))].sort((a, b) => new Date(a) - new Date(b));
+            const datasets = Object.entries(dataObj).map(([label, dateData]) => ({
+                label,
+                data: allDates.map(date => dateData[date] || 0),
+                borderColor: getRandomColor(),
+                backgroundColor: getRandomColor(0.2),
+                fill: true,
+                tension: 0.4
+            }));
+            new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: allDates,
+                    datasets
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        }
+        
+        function getRandomColor(opacity = 1) {
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+            return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+        }
+        
+        document.addEventListener("DOMContentLoaded", loadExerciseAnalytics);
+    </script>
+
 
     <!-- Carousel Screen -->
     <div id="carouselScreen" class="screen active">
@@ -166,6 +235,7 @@
         </div>
     </div>
 
+    <!-- Personalized Exercise Screen based on user experience level -->
     <div id="personalizedSection" class="screen active">
         <hr>
         <h2 style="text-align: left; margin: 20px 20px; color: #ff6f61; font-size: 2rem;">Personalized Workouts</h2>
@@ -191,7 +261,7 @@
     </div>
     
 
-    <footer>
+    <footer id="footer">
         <p>&copy; 2024 Fitness Tracker. Built with ❤️ and TensorFlow.js</p>
         <p><a href="#">Privacy Policy</a> | <a href="#">Contact Us</a></p>
     </footer>
@@ -200,10 +270,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection"></script>
     
-    <!-- Common utilities -->
+    <!-- Common utilities 
     <script src="js/utils.js"></script>
     <script src="js/main.js"></script>
-    <!-- Exercise specific scripts -->
     <script src="js/pushup.js"></script>
     <script src="js/lunges.js"></script>
     <script src="js/bicepCurl.js"></script>
@@ -216,7 +285,7 @@
     <script src="js/frontRaise.js"></script>
     <script src="Exercises/pushup/pushup.js"></script>
     <script src="Exercises/pushup/pushup-counter.html"></script>
-    
+    -->
 
     <!-- Main script -->
     

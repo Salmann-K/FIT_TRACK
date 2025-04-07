@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <style>
+        body {
+            background: black;
+            color: red;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #222;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px red;
+            text-align: center;
+            width: 40%;
+        }
+        h1 {
+            color: red;
+            margin-bottom: 20px;
+        }
+        .info {
+            font-size: 18px;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background: black;
+            border: 1px solid red;
+            color: red;
+        }
+        .info span {
+            font-weight: bold;
+            color: white;
+        }
+        .btn {
+            padding: 10px 20px;
+            background: red;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background: darkred;
+            color: white;
+        }
+    </style>
+    <script type="module" src="./profilepage.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Your Profile</h1>
+        <div class="info">First Name: <span id="loggedUserFName"></span></div>
+        <div class="info">Last Name: <span id="loggedUserLName"></span></div>
+        <div class="info">Email: <span id="loggedUserEmail"></span></div>
+        <!--<button id="logout" class="btn">Logout</button> -->
+    </div>
+</body>
+</html>

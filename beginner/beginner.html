@@ -13,16 +13,20 @@
     </header>
 
     <h2 style="text-align: left; margin: 20px 20px; color: #ff6f61; font-size: 2rem;">Stages</h2>
+    <div style="height: 15px;"></div>
 
     <div id="personalizedSection" class="screen active">
         <div style="display: flex; flex-direction: column; gap: 20px; margin: 20px;">
             <!-- Beginner Section -->
             <div style="display: flex; align-items: center; gap: 50px;">
-                <div class="level-card" style="flex: 1; cursor: pointer;" onclick="window.location.href='./stage1/exerciseForBegineerStage1.html'">
-                    <img src="../assets/stage1.png" alt="Stage 1" style="width: 100%; height: 100%; object-fit: cover;">
+                <div class="level-card" style="flex: 1; cursor: pointer;" >
+                    <img src="../assets/stage1.png" alt="Stage 1" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">
+
                 </div>
                 <div class="textarea-container">
-                    <label for="beginner-stage1">Notes for Beginner Stage 1:</label>
+                    <div class="set-cards-container" style="justify-content: space-evenly;">
+                        <div class="set-card" onclick="window.location.href='.././workoutSplit/SingleMuscle/singlemuscle.html'">Single Muscle Split</div>
+                    </div>
                     <textarea id="beginner-stage1" readonly>
                         Follow the Stage 1 for first 7 Days.
                     </textarea>
@@ -31,33 +35,37 @@
     
             <!-- Intermediate Section -->
             <div style="display: flex; align-items: center; gap: 50px;">
-                <div class="level-card" style="flex: 1; cursor: pointer;" onclick="window.location.href='./stage2/exerciseForBegineerStage2.html'">
-                    <img src="../assets/stage2.png" alt="Stage 1" style="width: 100%; height: 100%; object-fit: cover;">
+                <div class="level-card" style="flex: 1; cursor: pointer;" >
+                    <img src="../assets/stage2.png" alt="Stage 1" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">
                 </div>
                 <div class="textarea-container">
-                    <label for="beginner-stage2">Notes for Beginner Stage 2:</label>
+                    <div class="set-cards-container" style="justify-content: space-evenly;">
+                        <div class="set-card" onclick="window.location.href='.././workoutSplit/SingleMuscle/singlemuscle.html'">Single Muscle Split</div>
+                    </div>
                     <textarea id="beginner-stage2" readonly>
-                        After Completing Stage 1
-                        Follow the Stage 2 for next 14 Days.
+                        After Completing Stage 1 Follow the Stage 2 for next 14 Days.
                     </textarea>
                 </div>
             </div>
     
             <!-- Advanced Section -->
             <div style="display: flex; align-items: center; gap: 50px;">
-                <div class="level-card" style="flex: 1; cursor: pointer;" onclick="window.location.href='./stage3/exerciseForBegineerStage3.html'">
-                    <img src="../assets/stage3.png" alt="Stage 1" style="width: 100%; height: 100%; object-fit: cover;">
+                <div class="level-card" style="flex: 1; cursor: pointer;" >
+                    <img src="../assets/stage3.png" alt="Stage 1" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">
                 </div>
                 <div class="textarea-container">
-                    <label for="beginner-stage3">Notes for Beginner Stage 3:</label>
+                    <div class="set-cards-container" style="justify-content: space-evenly;">
+                        <div class="set-card" onclick="window.location.href='.././workoutSplit/SingleMuscle/singlemuscle.html'">Single Muscle Split</div>
+                    </div>
                     <textarea id="beginner-stage3" readonly>
-                        After Completing Stage 1 and Stage 2
-                        Follow the Stage 3 for next 21 Days.
+                        After Completing Stage 1 and Stage 2 Follow the Stage 3 for next 21 Days.
                     </textarea>
                 </div>
             </div>
         </div>
     </div>
+
+    <div style="height: 80px;"></div>
 
     <footer>
         <p>&copy; 2024 Fitness Tracker. Built with ❤️ and TensorFlow.js</p>

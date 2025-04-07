@@ -1,3 +1,5 @@
+import { saveExerciseLog } from "../../exerciseLogger.js";
+
 const params = new URLSearchParams(window.location.search);
 const stopCount = parseInt(params.get("stopCount")) || Infinity; // Default to no limit if not provided
 const redirectUrl = params.get("redirectUrl");
@@ -9,6 +11,7 @@ const ctx = canvas.getContext("2d");
 let count = 0;
 let position = null;
 let detector;
+let startTime=null;
 
 // Function to set up the camera
 async function setupCamera() {
@@ -68,6 +71,10 @@ async function detectPose() {
         position = "up"; // Arms fully extended
         count++; // Increment the count for one completed rep
       }
+
+      if(count==1){
+        startTime=Date.now;
+      }
     }
 
     // Draw keypoints
@@ -93,11 +100,17 @@ async function detectPose() {
   ctx.fillText(`Bench Press Reps: ${count}`, 10, 30);
 
   if (count >= stopCount) {
-    alert(`Bench Press goal reached: ${count}`);
-    if (redirectUrl) {
-      window.location.href = redirectUrl;
-    }
-    return; // Stop further detection
+    const elapsedTime = Math.round((Date.now() - startTime) / 1000);
+    saveExerciseLog("BenchPress", stopCount, elapsedTime);
+        alert(`Bench Press goal reached: ${count}`);
+      
+        if (redirectUrl) {
+          setTimeout(() => {
+            window.location.href = redirectUrl;
+          }, 2000); // 5 seconds delay before redirection
+        }
+      
+        return;
   }
 
   requestAnimationFrame(detectPose);
